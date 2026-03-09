@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CareConnect – Hospital Appointment System</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+  <!-- ==========================================
+       MOBILE DRAWER
+  =========================================== -->
+  <div id="mob-drawer" onclick="closeMobDrawer(event)">
+    <div class="mob-inner">
+      <button class="mob-close" onclick="toggleMobDrawer()">✕</button>
+      <button class="mob-lnk act"  onclick="go('home')">🏠 Home</button>
+      <button class="mob-lnk"      onclick="go('my-dashboard')">📊 My Dashboard</button>
+      <button class="mob-lnk"      onclick="go('find-doctors')">🔍 Find Doctors</button>
+      <button class="mob-lnk"      onclick="go('receptionist')">🖥️ Receptionist</button>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
+        <button class="nb-login" style="width:100%;padding:11px;border-radius:12px;border:1.5px solid var(--border)">Login</button>
+        <button class="nb-book"  style="width:100%;padding:12px;border-radius:12px">Book Appointment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       NAVBAR
+  =========================================== -->
+  <nav id="navbar">
+    <a class="nb-brand" href="#">
+      <div class="nb-logo">🏥</div>
+      <div class="nb-name">Care<span>Connect</span></div>
+    </a>
+
+    <div class="nb-links">
+      <button class="nb-link act" onclick="go('home')">Home</button>
+      <button class="nb-link"     onclick="go('my-dashboard')">My Dashboard</button>
+      <button class="nb-link"     onclick="go('find-doctors')">Find Doctors</button>
+      <button class="nb-link"     onclick="go('receptionist')">Receptionist</button>
+    </div>
+
+    <div class="nb-right">
+      <button class="nb-login">Login</button>
+      <button class="nb-book">Book Appointment</button>
+      <button class="nb-ham" onclick="toggleMobDrawer()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       HERO SECTION
+  =========================================== -->
+  <section id="home">
+    <div class="hero-blob b1"></div>
+    <div class="hero-blob b2"></div>
+
+    <div class="hero-inner">
+      <!-- Left -->
+      <div>
+        <div class="hero-tag">
+          <span class="pulse-dot"></span>Trusted by 50,000+ Patients Nationwide
+        </div>
+        <h1 class="hero-h1">Advanced Healthcare,<br><em>At Your Fingertips</em></h1>
+        <p class="hero-sub">
+          Book specialist appointments in seconds, track your health journey, and connect
+          with world-class doctors — all through one beautifully simple platform.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="go('find-doctors')">🔍 Find a Doctor</button>
+          <button class="btn-outline"  onclick="go('my-dashboard')">📊 My Dashboard</button>
+        </div>
+        <div class="hero-kpi">
+          <div class="kpi-item"><div class="kpi-n">200<em>+</em></div><div class="kpi-l">Specialist Doctors</div></div>
+          <div class="kpi-item"><div class="kpi-n">15<em>+</em></div><div class="kpi-l">Departments</div></div>
+          <div class="kpi-item"><div class="kpi-n">50K<em>+</em></div><div class="kpi-l">Happy Patients</div></div>
+          <div class="kpi-item"><div class="kpi-n">24<em>/7</em></div><div class="kpi-l">Emergency Care</div></div>
+        </div>
+      </div>
+
+      <!-- Right – Appointment Booking Card -->
+      <div style="position:relative">
+        <div class="hero-card">
+          <div class="hc-doc-row">
+            <div class="hc-doc-av">
+              <svg viewBox="0 0 50 60" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="25" cy="22" rx="13" ry="15" fill="#f5cba7"/>
+                <ellipse cx="25" cy="17" rx="14" ry="9"  fill="#2c1810" opacity=".85"/>
+                <rect x="18" y="34" width="14" height="8" rx="4" fill="#f5cba7"/>
+                <rect x="8"  y="38" width="34" height="22" rx="8" fill="#fff"/>
+                <path d="M20 38 L25 46 L30 38" fill="none" stroke="#0d7c5f" stroke-width="2"/>
+                <path d="M16 44 Q10 50 14 56 Q18 62 22 56 Q24 53 22 50" fill="none" stroke="#0d7c5f" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="22" cy="50" r="3.5" fill="#0d7c5f" opacity=".8"/>
+                <circle cx="19" cy="22" r="2.5" fill="white"/>
+                <circle cx="19.8" cy="22" r="1.4" fill="#111"/>
+                <circle cx="31" cy="22" r="2.5" fill="white"/>
+                <circle cx="31.8" cy="22" r="1.4" fill="#111"/>
+                <path d="M21 29 Q25 33 29 29" fill="none" stroke="#c07850" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="hc-doc-name">Dr. Rajesh Sharma</div>
+              <div class="hc-doc-spec">Cardiologist · MBBS, MD</div>
+              <div class="hc-badge">⭐ 4.9 · 12 yrs experience</div>
+            </div>
+          </div>
+
+          <div class="hc-avail">
+            <span class="hc-avail-lbl">📅 Today, 15 March 2025</span>
+            <span class="hc-avail-status"><span class="hc-avail-dot"></span>Available</span>
+          </div>
+
+          <div class="slots" id="hero-slots">
+            <div class="slot"     onclick="pickSlot(this)">9:00 AM</div>
+            <div class="slot busy">9:30 AM</div>
+            <div class="slot"     onclick="pickSlot(this)">10:00 AM</div>
+            <div class="slot busy">10:30 AM</div>
+            <div class="slot"     onclick="pickSlot(this)">11:00 AM</div>
+            <div class="slot sel" onclick="pickSlot(this)">2:00 PM</div>
+            <div class="slot"     onclick="pickSlot(this)">2:30 PM</div>
+            <div class="slot busy">3:00 PM</div>
+            <div class="slot"     onclick="pickSlot(this)">3:30 PM</div>
+          </div>
+
+          <button class="hc-confirm" onclick="confirmBooking()">Confirm Appointment →</button>
+        </div>
+
+        <!-- Floating chips -->
+        <div class="chip-float cf1">
+          <div class="chip-icon" style="background:#dcfce7">✅</div>
+          <div class="chip-txt"><strong>Appointment Confirmed</strong><span>Today · 2:00 PM</span></div>
+        </div>
+        <div class="chip-float cf2">
+          <div class="chip-icon" style="background:#dbeafe">💊</div>
+          <div class="chip-txt"><strong>Prescription Ready</strong><span>View in dashboard</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       WHY CARECONNECT
+  =========================================== -->
+  <section class="sec" id="why" style="background:#fff">
+    <div class="sec-inner">
+      <div class="why-grid">
+        <!-- Left -->
+        <div>
+          <div class="sec-label reveal">💡 Why Choose Us</div>
+          <h2 class="sec-h2 reveal">Why Choose<br><em>CareConnect?</em></h2>
+          <p class="sec-sub reveal">We're reinventing healthcare access — making expert medical care faster, smarter, and more personal than it's ever been.</p>
+
+          <div class="why-cards">
+            <div class="why-card reveal d1">
+              <div class="wc-icon g1">📅</div>
+              <div class="wc-body">
+                <h4>Instant Appointment Booking</h4>
+                <p>Book same-day or advance appointments with your preferred specialist in under 60 seconds, any time of day or night.</p>
+              </div>
+            </div>
+            <div class="why-card reveal d2">
+              <div class="wc-icon g2">🔒</div>
+              <div class="wc-body">
+                <h4>Secure Digital Health Records</h4>
+                <p>Your complete medical history, prescriptions, and lab reports — encrypted, accessible, and always in your control.</p>
+              </div>
+            </div>
+            <div class="why-card reveal d3">
+              <div class="wc-icon g3">🎥</div>
+              <div class="wc-body">
+                <h4>Video & In-Person Consultations</h4>
+                <p>Choose between a face-to-face visit or a premium-quality video consultation from the comfort of your home.</p>
+              </div>
+            </div>
+            <div class="why-card reveal d4">
+              <div class="wc-icon g4">🔔</div>
+              <div class="wc-body">
+                <h4>Smart Reminders & Follow-ups</h4>
+                <p>Never miss a dose or check-up — intelligent notifications keep your entire health journey on track.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right – Stats -->
+        <div class="why-stats">
+          <div class="ws-big reveal d1">
+            <div class="ws-big-n">98%</div>
+            <div class="ws-big-l">Patient satisfaction score, based on over 12,000 verified reviews from our community.</div>
+          </div>
+          <div class="ws-row">
+            <div class="ws-mini reveal d2">
+              <div class="ws-mini-n">24/7</div>
+              <div class="ws-mini-l">Emergency care and online support available round the clock</div>
+            </div>
+            <div class="ws-mini reveal d3">
+              <div class="ws-mini-n">15 min</div>
+              <div class="ws-mini-l">Average wait time — down from 2+ hours in traditional settings</div>
+            </div>
+          </div>
+          <div class="ws-mini reveal d4" style="background:#fff;border-color:rgba(13,124,95,.2)">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div class="ws-mini-n">200+</div>
+                <div class="ws-mini-l">Verified specialists across 15 departments, available for you today</div>
+              </div>
+              <div style="font-size:52px;opacity:.15">👨‍⚕️</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       DEPARTMENTS
+  =========================================== -->
+  <section class="sec" id="departments">
+    <div class="sec-inner">
+      <div class="sec-head cx">
+        <div class="sec-label reveal" style="margin:0 auto 14px">🏥 Our Specialities</div>
+        <h2 class="sec-h2 reveal">Our <em>Departments</em></h2>
+        <p class="sec-sub reveal">World-class specialists across every major medical discipline — all under one roof, all accessible in seconds.</p>
+      </div>
+
+      <div class="dept-grid">
+        <div class="dept-card reveal d1"><div class="dc-icon-wrap">❤️</div><div class="dc-name">Cardiology</div><div class="dc-sub">Heart &amp; vascular care</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d2"><div class="dc-icon-wrap">🧠</div><div class="dc-name">Neurology</div><div class="dc-sub">Brain &amp; nervous system</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d3"><div class="dc-icon-wrap">🦴</div><div class="dc-name">Orthopaedics</div><div class="dc-sub">Bones, joints &amp; spine</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d4"><div class="dc-icon-wrap">👁️</div><div class="dc-name">Ophthalmology</div><div class="dc-sub">Eye care &amp; surgery</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d1"><div class="dc-icon-wrap">🫁</div><div class="dc-name">Pulmonology</div><div class="dc-sub">Lungs &amp; respiratory</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d2"><div class="dc-icon-wrap">🔬</div><div class="dc-name">Oncology</div><div class="dc-sub">Cancer treatment &amp; care</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d3"><div class="dc-icon-wrap">👶</div><div class="dc-name">Paediatrics</div><div class="dc-sub">Child health &amp; growth</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d4"><div class="dc-icon-wrap">🦷</div><div class="dc-name">Dental</div><div class="dc-sub">Oral health &amp; surgery</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d1"><div class="dc-icon-wrap">🏃</div><div class="dc-name">Physiotherapy</div><div class="dc-sub">Rehab &amp; movement</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d2"><div class="dc-icon-wrap">🧬</div><div class="dc-name">Genetics</div><div class="dc-sub">Genomic testing &amp; counselling</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d3"><div class="dc-icon-wrap">🩺</div><div class="dc-name">General Medicine</div><div class="dc-sub">Primary &amp; preventive care</div><div class="dc-arrow">→</div></div>
+        <div class="dept-card reveal d4"><div class="dc-icon-wrap">🩻</div><div class="dc-name">Radiology</div><div class="dc-sub">Imaging &amp; diagnostics</div><div class="dc-arrow">→</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FIND DOCTORS
+  =========================================== -->
+  <section class="sec" id="find-doctors" style="background:#fff">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <div class="sec-label reveal">🔍 Search</div>
+        <h2 class="sec-h2 reveal">Find <em>Doctors</em></h2>
+        <p class="sec-sub reveal">Search by name, department, or availability and book your appointment instantly.</p>
+      </div>
+
+      <!-- Search bar -->
+      <div class="search-row reveal">
+        <div class="sf">
+          <label>Doctor Name</label>
+          <input type="text" id="s-name" placeholder="e.g. Dr. Sharma"/>
+        </div>
+        <div class="sf">
+          <label>Department</label>
+          <select id="s-dept">
+            <option value="">All Departments</option>
+            <option>Cardiology</option>
+            <option>Neurology</option>
+            <option>Orthopaedics</option>
+            <option>Ophthalmology</option>
+            <option>Paediatrics</option>
+            <option>Pulmonology</option>
+            <option>Oncology</option>
+            <option>Dental</option>
+          </select>
+        </div>
+        <div class="sf">
+          <label>Availability</label>
+          <select id="s-avail">
+            <option value="">Any Time</option>
+            <option>Today</option>
+            <option>Tomorrow</option>
+            <option>This Week</option>
+          </select>
+        </div>
+        <button class="btn-search" onclick="searchDocs()">Search 🔍</button>
+      </div>
+
+      <!-- Filter pills -->
+      <div class="filter-pills reveal">
+        <button class="fpill act" onclick="filterDocs(this,'all')">All</button>
+        <button class="fpill"     onclick="filterDocs(this,'Cardiology')">❤️ Cardiology</button>
+        <button class="fpill"     onclick="filterDocs(this,'Neurology')">🧠 Neurology</button>
+        <button class="fpill"     onclick="filterDocs(this,'Orthopaedics')">🦴 Orthopaedics</button>
+        <button class="fpill"     onclick="filterDocs(this,'Paediatrics')">👶 Paediatrics</button>
+        <button class="fpill"     onclick="filterDocs(this,'Dental')">🦷 Dental</button>
+      </div>
+
+      <!-- Doctor cards injected by JS -->
+      <div class="doctors-grid" id="docs-grid"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       RECEPTIONIST
+  =========================================== -->
+  <section class="sec" id="receptionist">
+    <div class="sec-inner">
+      <div class="recept-grid">
+
+        <!-- Left: Features -->
+        <div>
+          <div class="sec-label reveal">🖥️ Front Desk</div>
+          <h2 class="sec-h2 reveal">Smart <em>Receptionist</em><br>System</h2>
+          <p class="sec-sub reveal">Streamline patient flow, manage walk-ins, and coordinate scheduling seamlessly with our intelligent front-desk solution.</p>
+
+          <div class="recept-feats">
+            <div class="rf reveal d1">
+              <div class="rf-icon">📋</div>
+              <div class="rf-body"><h4>Live Queue Management</h4><p>Real-time patient queue with priority handling and estimated wait times.</p></div>
+            </div>
+            <div class="rf reveal d2">
+              <div class="rf-icon">🔔</div>
+              <div class="rf-body"><h4>Automated Patient Alerts</h4><p>SMS and app notifications sent automatically when a patient's turn is near.</p></div>
+            </div>
+            <div class="rf reveal d3">
+              <div class="rf-icon">📁</div>
+              <div class="rf-body"><h4>Instant Record Access</h4><p>Pull up complete patient history, past visits, and prescriptions in one click.</p></div>
+            </div>
+            <div class="rf reveal d4">
+              <div class="rf-icon">💳</div>
+              <div class="rf-body"><h4>Integrated Billing</h4><p>Generate invoices, process payments, and issue receipts all from one dashboard.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Queue Panel -->
+        <div class="reveal d2">
+          <div class="queue-panel">
+            <div class="qp-header">
+              <span class="qp-title">📋 Today's Queue</span>
+              <span class="live-badge">Live</span>
+            </div>
+            <div class="queue-list">
+              <div class="qi">
+                <div class="qi-num" style="background:linear-gradient(135deg,#22c55e,#16a34a)">01</div>
+                <div class="qi-info"><div class="qi-name">Ravi Kumar</div><div class="qi-det">Cardiology · Dr. Sharma · 9:00 AM</div></div>
+                <span class="qi-stat cur">In Session</span>
+              </div>
+              <div class="qi">
+                <div class="qi-num">02</div>
+                <div class="qi-info"><div class="qi-name">Priya Mehta</div><div class="qi-det">Neurology · Dr. Iyer · 9:30 AM</div></div>
+                <span class="qi-stat nxt">Up Next</span>
+              </div>
+              <div class="qi">
+                <div class="qi-num">03</div>
+                <div class="qi-info"><div class="qi-name">Arjun Singh</div><div class="qi-det">Orthopaedics · Dr. Patel · 10:00 AM</div></div>
+                <span class="qi-stat wait">Waiting</span>
+              </div>
+              <div class="qi">
+                <div class="qi-num">04</div>
+                <div class="qi-info"><div class="qi-name">Meena Rao</div><div class="qi-det">Paediatrics · Dr. Nair · 10:30 AM</div></div>
+                <span class="qi-stat wait">Waiting</span>
+              </div>
+            </div>
+            <button class="qp-btn" onclick="toast('Patient Priya Mehta notified — proceeding to Room 2')">
+              Call Next Patient →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MY DASHBOARD
+  =========================================== -->
+  <section class="sec" id="my-dashboard">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <div class="sec-label reveal">📊 Patient Portal</div>
+        <h2 class="sec-h2 reveal">My <em>Dashboard</em></h2>
+        <p class="sec-sub reveal">Your complete health overview — appointments, records, prescriptions and vitals, all in one place.</p>
+      </div>
+
+      <div class="dash-wrap">
+        <!-- Sidebar -->
+        <div class="dsb reveal">
+          <div class="dsb-user">
+            <div class="dsb-av">AK</div>
+            <div class="dsb-name">Aarav Kumar</div>
+            <div class="dsb-pid">Patient ID: CC-20892</div>
+            <div class="dsb-online"><span class="dsb-onl-dot"></span>Active</div>
+          </div>
+          <div class="dsb-nav">
+            <button class="dsb-ni act" onclick="dashTab(this,'Overview')"><span class="dsb-ni-ic">📊</span>Overview</button>
+            <button class="dsb-ni"     onclick="dashTab(this,'Appointments')"><span class="dsb-ni-ic">📅</span>Appointments<span class="dsb-badge">3</span></button>
+            <button class="dsb-ni"     onclick="dashTab(this,'Medical Records')"><span class="dsb-ni-ic">📁</span>Medical Records</button>
+            <button class="dsb-ni"     onclick="dashTab(this,'Prescriptions')"><span class="dsb-ni-ic">💊</span>Prescriptions<span class="dsb-badge">2</span></button>
+            <button class="dsb-ni"     onclick="dashTab(this,'Vitals & Health')"><span class="dsb-ni-ic">❤️</span>Vitals &amp; Health</button>
+            <button class="dsb-ni"     onclick="dashTab(this,'Billing')"><span class="dsb-ni-ic">🧾</span>Billing</button>
+            <button class="dsb-ni"     onclick="dashTab(this,'Settings')"><span class="dsb-ni-ic">⚙️</span>Settings</button>
+          </div>
+        </div>
+
+        <!-- Main Panel -->
+        <div class="dm-main">
+          <!-- Stat cards -->
+          <div class="dm-stats">
+            <div class="dm-stat reveal d1"><div class="dms-icon c1">📅</div><div class="dms-n">3</div><div class="dms-l">Upcoming Appointments</div><div class="dms-ch up">↑ 1 new this week</div></div>
+            <div class="dm-stat reveal d2"><div class="dms-icon c2">💊</div><div class="dms-n">5</div><div class="dms-l">Active Prescriptions</div><div class="dms-ch warn">↓ 2 expiring soon</div></div>
+            <div class="dm-stat reveal d3"><div class="dms-icon c3">📋</div><div class="dms-n">12</div><div class="dms-l">Total Visits</div><div class="dms-ch up">↑ 2 this month</div></div>
+            <div class="dm-stat reveal d4"><div class="dms-icon c4">🧾</div><div class="dms-n">₹2,400</div><div class="dms-l">Pending Bills</div><div class="dms-ch red">⚠ Due in 3 days</div></div>
+          </div>
+
+          <!-- Appointments Table -->
+          <div class="dm-panel reveal">
+            <div class="dmp-head">
+              <div class="dmp-title">📅 Upcoming Appointments</div>
+              <button class="dmp-act" onclick="go('find-doctors')">+ Book New</button>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="appt-tbl">
+                <thead>
+                  <tr><th>Doctor</th><th>Department</th><th>Date &amp; Time</th><th>Type</th><th>Status</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="appt-doc-cell">
+                        <div class="adc-av" style="background:linear-gradient(135deg,#b2d8d0,#78c4b5)">👨‍⚕️</div>
+                        <div><div class="adc-name">Dr. Rajesh Sharma</div><div class="adc-spec">MBBS, MD Cardiology</div></div>
+                      </div>
+                    </td>
+                    <td>Cardiology</td><td>Today, 2:00 PM</td><td>In-person</td>
+                    <td><span class="stbadge confirmed">✅ Confirmed</span></td>
+                    <td><button class="dmp-act" style="font-size:12px;padding:5px 11px" onclick="toast('Opening video call with Dr. Sharma...')">Join →</button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="appt-doc-cell">
+                        <div class="adc-av" style="background:linear-gradient(135deg,#c8e6c9,#81c784)">👩‍⚕️</div>
+                        <div><div class="adc-name">Dr. Lakshmi Iyer</div><div class="adc-spec">MBBS, DM Neurology</div></div>
+                      </div>
+                    </td>
+                    <td>Neurology</td><td>16 Mar, 11:00 AM</td><td>Video Call</td>
+                    <td><span class="stbadge pending">⏳ Pending</span></td>
+                    <td><button class="dmp-act" style="font-size:12px;padding:5px 11px" onclick="toast('Opening reschedule dialog...')">Reschedule</button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="appt-doc-cell">
+                        <div class="adc-av" style="background:linear-gradient(135deg,#ffccbc,#ff8a65)">👨‍⚕️</div>
+                        <div><div class="adc-name">Dr. Suresh Patel</div><div class="adc-spec">MS Orthopaedics</div></div>
+                      </div>
+                    </td>
+                    <td>Orthopaedics</td><td>20 Mar, 4:00 PM</td><td>In-person</td>
+                    <td><span class="stbadge confirmed">✅ Confirmed</span></td>
+                    <td><button class="dmp-act" style="font-size:12px;padding:5px 11px" onclick="toast('Opening appointment details...')">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Health Vitals -->
+          <div class="dm-panel reveal">
+            <div class="dmp-head">
+              <div class="dmp-title">❤️ Health Summary</div>
+              <button class="dmp-act" onclick="toast('Opening full health report...')">View Full Report</button>
+            </div>
+            <div class="health-grid">
+              <div class="hg-card"><div class="hgc-icon r">❤️</div><div><div class="hgc-val">72 bpm</div><div class="hgc-lbl">Heart Rate — Normal</div><div class="hgc-bar"><div class="hgb-fill" style="width:72%;background:#ef4444"></div></div></div></div>
+              <div class="hg-card"><div class="hgc-icon b">🩺</div><div><div class="hgc-val">118/76</div><div class="hgc-lbl">Blood Pressure — Good</div><div class="hgc-bar"><div class="hgb-fill" style="width:60%;background:#3b82f6"></div></div></div></div>
+              <div class="hg-card"><div class="hgc-icon g">🩸</div><div><div class="hgc-val">95 mg/dL</div><div class="hgc-lbl">Blood Sugar — Normal</div><div class="hgc-bar"><div class="hgb-fill" style="width:55%;background:#22c55e"></div></div></div></div>
+              <div class="hg-card"><div class="hgc-icon y">⚖️</div><div><div class="hgc-val">72.4 kg</div><div class="hgc-lbl">Weight — Healthy BMI</div><div class="hgc-bar"><div class="hgb-fill" style="width:65%;background:#f59e0b"></div></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       TESTIMONIALS
+  =========================================== -->
+  <section class="sec" id="testimonials" style="background:#fff">
+    <div class="sec-inner">
+      <div class="sec-head cx">
+        <div class="sec-label reveal" style="margin:0 auto 14px">💬 Patient Stories</div>
+        <h2 class="sec-h2 reveal">What Patients <em>Say</em></h2>
+        <p class="sec-sub reveal">Real experiences from real people who've felt the CareConnect difference.</p>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal d1">
+          <div class="tc-stars">⭐⭐⭐⭐⭐</div>
+          <p class="tc-text">"Booking my cardiology appointment took less than a minute. The doctor was incredibly attentive and the whole experience was seamlessly smooth. CareConnect transformed how I access healthcare."</p>
+          <div class="tc-user">
+            <div class="tc-av" style="background:linear-gradient(135deg,#0d7c5f,#12a07a)">RK</div>
+            <div><div class="tc-name">Ramesh Kumar</div><div class="tc-role">Cardiology Patient · Mumbai</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal d2">
+          <div class="tc-stars">⭐⭐⭐⭐⭐</div>
+          <p class="tc-text">"The dashboard is beautifully designed. I can see all my prescriptions, appointments and test reports in one place. The video consultation feature is a game-changer for busy professionals like me."</p>
+          <div class="tc-user">
+            <div class="tc-av" style="background:linear-gradient(135deg,#c9880f,#f5a623)">PM</div>
+            <div><div class="tc-name">Priya Mehta</div><div class="tc-role">Neurology Patient · Delhi</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal d3">
+          <div class="tc-stars">⭐⭐⭐⭐⭐</div>
+          <p class="tc-text">"As a parent, finding a reliable paediatrician quickly is everything. CareConnect helped me book an appointment for my child within minutes and the follow-up reminders are incredibly helpful."</p>
+          <div class="tc-user">
+            <div class="tc-av" style="background:linear-gradient(135deg,#1e6fa8,#2196f3)">AS</div>
+            <div><div class="tc-name">Anita Singh</div><div class="tc-role">Paediatrics · Bangalore</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer id="footer">
+    <div class="ft-inner">
+      <div class="ft-grid">
+
+        <!-- Brand -->
+        <div>
+          <div class="ft-brand-row">
+            <div class="nb-logo" style="width:44px;height:44px;font-size:21px">🏥</div>
+            <div class="nb-name" style="font-size:23px;color:#fff">Care<span style="color:#12a07a">Connect</span></div>
+          </div>
+          <p class="ft-desc">Connecting patients with the right specialists at the right time. Advanced healthcare access for everyone, everywhere.</p>
+          <div class="ft-contact">
+            <div class="ftc-item"><div class="ftc-ic">📍</div>CareConnect Hospital, MG Road, Bangalore – 560001</div>
+            <div class="ftc-item"><div class="ftc-ic">📞</div>+91 80 4567 8900</div>
+            <div class="ftc-item"><div class="ftc-ic">✉️</div>support@careconnect.in</div>
+            <div class="ftc-item"><div class="ftc-ic">⏰</div>Open 24/7 · Emergency Always Available</div>
+          </div>
+          <div class="ft-socials">
+            <div class="fts" onclick="toast('Opening Facebook...')">👥</div>
+            <div class="fts" onclick="toast('Opening Twitter...')">🐦</div>
+            <div class="fts" onclick="toast('Opening Instagram...')">📸</div>
+            <div class="fts" onclick="toast('Opening YouTube...')">▶️</div>
+            <div class="fts" onclick="toast('Opening LinkedIn...')">💼</div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h5>Quick Links</h5>
+          <div class="ft-links">
+            <span class="ft-link" onclick="go('home')">🏠 Home</span>
+            <span class="ft-link" onclick="go('find-doctors')">🔍 Find Doctors</span>
+            <span class="ft-link" onclick="go('departments')">🏥 Departments</span>
+            <span class="ft-link" onclick="go('receptionist')">🖥️ Receptionist Portal</span>
+            <span class="ft-link" onclick="go('my-dashboard')">📊 My Dashboard</span>
+            <span class="ft-link" onclick="toast('Opening About Us...')">ℹ️ About Us</span>
+            <span class="ft-link" onclick="toast('Opening Health Blog...')">📝 Health Blog</span>
+          </div>
+          <div class="ft-emergency">
+            <div class="fte-lbl">🚨 Emergency Helpline</div>
+            <div class="fte-num">108</div>
+            <div class="fte-sub">Free 24/7 Ambulance Service</div>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h5>Services</h5>
+          <div class="ft-links">
+            <span class="ft-link">📅 Appointment Booking</span>
+            <span class="ft-link">🎥 Video Consultations</span>
+            <span class="ft-link">💊 e-Prescriptions</span>
+            <span class="ft-link">🔬 Lab Tests at Home</span>
+            <span class="ft-link">🚑 Emergency Services</span>
+            <span class="ft-link">🏥 Health Packages</span>
+            <span class="ft-link">🧠 Mental Health</span>
+            <span class="ft-link">🩸 Blood Bank</span>
+          </div>
+        </div>
+
+        <!-- Newsletter & Hours -->
+        <div>
+          <h5>Stay Updated</h5>
+          <p class="ft-news-label">Subscribe for health tips, appointment alerts, and wellness guides — delivered to your inbox.</p>
+          <div class="ft-news-row">
+            <input type="email" id="nl-email" class="ft-news-input" placeholder="Your email address"/>
+            <button class="ft-news-btn" onclick="subscribeNL()">Subscribe</button>
+          </div>
+          <h5 style="margin-bottom:12px">Working Hours</h5>
+          <div class="ft-hours">
+            <div class="fth-row"><span>Mon – Fri</span><span class="fth-val">8:00 AM – 8:00 PM</span></div>
+            <div class="fth-row"><span>Saturday</span><span class="fth-val">9:00 AM – 5:00 PM</span></div>
+            <div class="fth-row"><span>Sunday</span><span class="fth-val">10:00 AM – 2:00 PM</span></div>
+            <div class="fth-row"><span>Emergency</span><span class="fth-val always">24/7 Always Open</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="ft-bottom">
+        <span>© 2025 CareConnect Health Systems Pvt. Ltd. All rights reserved.</span>
+        <div class="ft-blnks">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast container -->
+  <div id="toast-wrap"></div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
